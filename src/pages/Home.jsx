@@ -7,15 +7,20 @@ import NavBar from '../components/NavBar';
 
 export default function Home() {
 
+    const [page, setPage] = useState(1)
+
     const { loading, error, data } = useQuery(ALL_ANIME, {
         variables: {
-            page: 1,
+            page: page,
             perPage: 10,
         }
     })
 
     const allAnime = !loading ? data.Page.media : ""
-    const [showType, setShowType] = useState("list")
+
+    function paginate() {
+
+    }
 
     if (loading) {
         return <div>Loading...</div>
@@ -23,21 +28,17 @@ export default function Home() {
     else {
         return (
             <NavBar>
-                <div>
-                    <div className="absolute right-1 top-0">
-                        <div className="flex">
-                            <button onClick={() => setShowType("grid")}><ViewGridIcon className="h-6 w-6" /></button>
-                            <button onClick={() => setShowType("list")}><MenuIcon className="h-6 w-6" /></button>
-                        </div>
-                    </div>
-                    {allAnime.map((anime, id) => {
-                        if (showType === "list") {
-                            return <CardList children={anime}></CardList>
-                        }
-                        else {
-                            return <div></div>
-                        }
-                    })}
+                {allAnime.map((anime, id) => {
+                    return <CardList children={anime}></CardList>
+                })}
+                <div className="flex justify-between">
+                    <button onClick={() => setPage((page) => page - 1)}>
+                        <p className="pl-2 font-bold text-xl">⇐</p>
+                    </button>
+                    <span>Page {page}</span>
+                    <button onClick={() => setPage((page) => page + 1)}>
+                        <p className="pr-2 font-bold text-xl">⇒</p>
+                    </button>
                 </div>
             </NavBar>
         )

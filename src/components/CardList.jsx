@@ -22,7 +22,7 @@ export default function CardList({ children, ...attr }) {
 
     return (
         // <div className="w-full max-h-screen grid place-items-center bg-red-900">
-            <div className="bg-red-500 shadow-lg w-full border " onClick={() => gotoDetail(children.id)}>
+            <div className="bg-white shadow-lg w-full border " onClick={() => gotoDetail(children.id)}>
                 <div className="md:flex px-4 leading-none max-w-4xl">
                     <div className="flex-col">
                         <div className="pt-3">

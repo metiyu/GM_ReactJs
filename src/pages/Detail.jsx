@@ -17,8 +17,16 @@ export default function DetailPage() {
     }
     else {
         return <div className="grid">
+            <hr className="border-1 border-gray-300" />
             <div className="flex justify-center">
-                <h5 className="py-2 text-lg font-bold break-all max-w-screen-sm">{data.Media.title.romaji}</h5>
+                <div className="absolute left-0 pt-2 pl-1">
+                    <a href="/">
+                        Back
+                    </a>
+                </div>
+                <div className="w-64">
+                    <h5 className="py-2 text-lg font-bold break-all max-w-screen-sm">{data.Media.title.romaji}</h5>
+                </div>
             </div>
             <hr className="border-1 border-gray-300" />
             <div className="py-2 flex justify-center">
