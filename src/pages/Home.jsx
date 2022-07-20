@@ -32,9 +32,11 @@ export default function Home() {
                     return <CardList children={anime}></CardList>
                 })}
                 <div className="flex justify-between">
-                    <button onClick={() => setPage((page) => page - 1)}>
-                        <p className="pl-2 font-bold text-xl">⇐</p>
-                    </button>
+                    {page <= 1 ? (
+                        <button onClick={() => setPage((page) => page - 1)}>
+                            <p className="pl-2 font-bold text-xl">⇐</p>
+                        </button>
+                    ) : ""}
                     <span>Page {page}</span>
                     <button onClick={() => setPage((page) => page + 1)}>
                         <p className="pr-2 font-bold text-xl">⇒</p>
