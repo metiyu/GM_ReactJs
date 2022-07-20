@@ -14,7 +14,7 @@ import {
     StarIcon,
 } from '@heroicons/react/outline'
 import { SearchIcon } from '@heroicons/react/solid'
-import Home from './pages/Home';
+import Home from '../pages/Home';
 
 const navigation = [
     { name: 'Home', href: '#', icon: HomeIcon, current: false, isClick: 1 },
@@ -30,7 +30,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
+export default function NavBar({ children, ...attr }) {
     const [sidebarOpen, setSidebarOpen] = useState(false)
     const [tab, setTab] = useState([1])
 
@@ -162,8 +162,7 @@ export default function Example() {
                 <main className="flex-1 relative overflow-y-auto focus:outline-none">
                     <div className="py-6 w-screen" >
                         <ApolloProvider client={client}>
-                            {tab == 1 ? (<Home></Home>) : ""}
-                            {tab == 2 ? (<Home></Home>) : ""}
+                            {children}
                         </ApolloProvider>
                     </div>
                 </main>
