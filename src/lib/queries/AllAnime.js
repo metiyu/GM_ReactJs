@@ -9,6 +9,7 @@ query AllAnime($page: Int, $perPage: Int){
         genres
         duration
         averageScore
+        episodes
         title{
             romaji
         }

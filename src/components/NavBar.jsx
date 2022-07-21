@@ -1,24 +1,17 @@
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { Fragment, useState } from 'react'
-import { Dialog, Menu, Transition } from '@headlessui/react'
+import { Dialog, Transition } from '@headlessui/react'
 import {
-    BellIcon,
-    CalendarIcon,
-    ChartBarIcon,
-    FolderIcon,
     HomeIcon,
-    InboxIcon,
     MenuAlt2Icon,
-    UsersIcon,
-    XIcon,
     StarIcon,
 } from '@heroicons/react/outline'
 import { SearchIcon } from '@heroicons/react/solid'
-import Home from '../pages/Home';
 
 const navigation = [
-    { name: 'Home', href: '#', icon: HomeIcon, current: false, isClick: 1 },
-    { name: 'Favorite', href: '#', icon: StarIcon, current: false, isClick: 2 },
+    { name: 'Home', href: '/', icon: HomeIcon, current: false, isClick: 1 },
+    { name: 'Favorite', href: 'favorite', icon: StarIcon, current: false, isClick: 2 },
+    { name: 'Search', href: 'search', icon: SearchIcon, current: false, isClick: 3 },
 ]
 const userNavigation = [
     { name: 'Your Profile', href: '#' },

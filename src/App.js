@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
 import DetailPage from './pages/Detail';
 import Home from './pages/Home';
+import Search from './pages/Search';
+import Favorite from './pages/Favorite';
 
 function App() {
 
@@ -18,6 +20,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/:id" element={<DetailPage />} />
+          <Route path="/favorite" element={<Favorite/>}></Route>
+          <Route path="/search" element={<Search/>}></Route>
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
