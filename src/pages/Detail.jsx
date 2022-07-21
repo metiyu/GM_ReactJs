@@ -53,8 +53,10 @@ export default function DetailPage() {
     console.log(currTheme);
 
     if (loading) {
-        return <div className="absolute left-0 right-0 bottom-0 top-72">
-            <Loader type="spinner-circle" bgColor={"#000000"} title={"spinner-circle"} size={200} />
+        return <div className="flex w-screen h-screen" style={{ backgroundColor: currTheme.background }}>
+            <div className="absolute left-0 right-0 bottom-0 top-72">
+                <Loader type="spinner-circle" bgColor={currTheme.fontColor} size={200} />
+            </div>
         </div>
     }
     else if (data === undefined) {
