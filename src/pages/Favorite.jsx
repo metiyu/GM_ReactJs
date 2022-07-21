@@ -1,5 +1,6 @@
 import CardList from '../components/CardList';
 import NavBar from '../components/NavBar';
+import { useTheme } from '../lib/Theme';
 
 export default function Favorite() {
     const getArray = JSON.parse(localStorage.getItem("favorites") || "0")
@@ -8,6 +9,9 @@ export default function Favorite() {
         let x = getArray[index]
         favList[index] = JSON.parse(localStorage.getItem('favItem' + [x]) || '')
     }
+
+    const {currTheme, setCurrTheme} = useTheme()
+    console.log(currTheme);
 
     return (
         <NavBar>

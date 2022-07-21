@@ -6,6 +6,7 @@ import DetailPage from './pages/Detail';
 import Home from './pages/Home';
 import Search from './pages/Search';
 import Favorite from './pages/Favorite';
+import { ThemeContextProvider } from './lib/Theme';
 
 function App() {
 
@@ -16,14 +17,16 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/:id" element={<DetailPage />} />
-          <Route path="/favorite" element={<Favorite/>}></Route>
-          <Route path="/search" element={<Search/>}></Route>
-        </Routes>
-      </BrowserRouter>
+      <ThemeContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/:id" element={<DetailPage />} />
+            <Route path="/favorite" element={<Favorite />}></Route>
+            <Route path="/search" element={<Search />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </ThemeContextProvider>
     </ApolloProvider>
   );
 }

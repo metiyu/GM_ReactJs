@@ -4,12 +4,14 @@ import { useNavigate, useParams } from "react-router-dom"
 import { GET_ANIME } from "../lib/queries/GetAnime"
 import { RiHeartFill, RiHeartLine } from 'react-icons/ri';
 import Loader from "react-js-loader"
+import { useTheme } from "../lib/Theme";
 
 export default function DetailPage() {
     const { id } = useParams()
     const navigate = useNavigate()
     const [favorites, setFavorites] = useState([])
     const getArray = JSON.parse(localStorage.getItem("favorites") || "0")
+    const { currTheme, setCurrTheme } = useTheme()
 
     useEffect(() => {
         if (getArray !== 0) {
@@ -18,7 +20,6 @@ export default function DetailPage() {
     }, [])
 
     function changeColor(props, item) {
-        console.log(props);
         let array = favorites
         let addArray = true
         array.map((item, key) => {
@@ -49,7 +50,7 @@ export default function DetailPage() {
         }
     })
 
-    console.log(data);
+    console.log(currTheme);
 
     if (loading) {
         return <div className="absolute left-0 right-0 bottom-0 top-72">
@@ -58,8 +59,8 @@ export default function DetailPage() {
     }
     else if (data === undefined) {
         return <div>
-            <div className="absolute left-0 pt-2 pl-1">
-                <button onClick={() => navigate(-1)}>
+            <div className="absolute left-0 pt-2 pl-1" style={{ backgroundColor: currTheme.background }}>
+                <button onClick={() => navigate(-1)} style={{ color: currTheme.defaultFont }}>
                     Back
                 </button>
             </div>
@@ -68,15 +69,14 @@ export default function DetailPage() {
     }
     else {
         return <div className="grid">
-            <hr className="border-1 border-gray-300" />
-            <div className="flex justify-center">
-                <div className="absolute left-0 pt-2 pl-1">
-                    <button onClick={() => navigate(-1)}>
+            <div className="flex justify-center" style={{ backgroundColor: currTheme.backdrop }}>
+                <div className="absolute left-0 pt-2 pl-1" >
+                    <button onClick={() => navigate(-1)} style={{ color: currTheme.defaultFont }}>
                         Back
                     </button>
                 </div>
-                <div className="w-64">
-                    <h5 className="py-2 text-lg font-bold break-all max-w-screen-sm">{data.Media.title.romaji}</h5>
+                <div className="w-64" >
+                    <h5 className="py-2 text-lg font-bold break-all max-w-screen-sm" style={{ color: currTheme.defaultFont }}>{data.Media.title.romaji}</h5>
                 </div>
                 <div className="absolute right-0 pr-2 pt-5">
                     <button onClick={() => changeColor(id, data.Media)}>
@@ -88,90 +88,92 @@ export default function DetailPage() {
                     </button>
                 </div>
             </div>
-            <hr className="border-1 border-gray-300" />
-            <div className="py-2 flex justify-center">
-                <img src={data.Media.coverImage.large}
-                    alt="pic"
-                    className="h-72 rounded-md border-4 border-gray-300 shadow-lg" />
-            </div>
-            <div className="px-6">
-                <div className="py-1">
-                    <hr className="border-1 border-gray-300" />
+            <div style={{ backgroundColor: currTheme.background }}>
+                <hr className="border-1 border-gray-300" />
+                <div className="py-2 flex justify-center" >
+                    <img src={data.Media.coverImage.large}
+                        alt="pic"
+                        className="h-72 rounded-md border-4 border-gray-300 shadow-lg" />
                 </div>
-                <div>
-                    <p className="font-bold text-lg underline">Scores</p>
-                    <p className="flex font-bold">Rating:
-                        <p className="pl-1 font-medium">{data.Media.averageScore / 10}/10</p>
+                <div className="px-6">
+                    <div className="py-1">
+                        <hr className="border-1 border-gray-300" />
+                    </div>
+                    <div>
+                        <p className="font-bold text-lg underline" style={{ color: currTheme.defaultFont }}>Scores</p>
+                        <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>Rating:
+                            <p className="pl-1 font-medium" >{data.Media.averageScore / 10}/10</p>
+                        </p>
+                        <p className="flex font-bold"style={{ color: currTheme.defaultFont }}>Trend:
+                            <p className="pl-1 font-medium">#{data.Media.trending}</p>
+                        </p>
+                        <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>Ranked:
+                            <p className="pl-1 font-medium">#{data.Media.rankings[0].rank}</p>
+                        </p>
+                    </div>
+                    <div className="py-1">
+                        <hr className="border-1 border-gray-300" />
+                    </div>
+                </div>
+                <div className="px-6">
+                    <p className="font-bold text-lg underline" style={{ color: currTheme.defaultFont }}>Alternative Titles</p>
+                    <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>Japanese:
+                        <p className="pl-1 font-normal">{data.Media.title.native}</p>
                     </p>
-                    <p className="flex font-bold">Trend:
-                        <p className="pl-1 font-medium">#{data.Media.trending}</p>
+                    <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>English:
+                        <p className="pl-1 font-normal">{data.Media.title.romaji}</p>
                     </p>
-                    <p className="flex font-bold">Ranked:
-                        <p className="pl-1 font-medium">#{data.Media.rankings[0].rank}</p>
+                    <div className="py-1">
+                        <hr className="border-1 border-gray-300" />
+                    </div>
+                    <p className="font-bold text-lg underline" style={{ color: currTheme.defaultFont }}>Synopsis</p>
+                    <p style={{ color: currTheme.defaultFont }}>{data.Media.description}</p>
+                    <div className="py-1">
+                        <hr className="border-1 border-gray-300" />
+                    </div>
+                    <p className="font-bold text-lg underline" style={{ color: currTheme.defaultFont }}>Information</p>
+                    <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>Producers:
+                        <p className="pl-1 font-normal" >{data.Media.studios.edges.map((studio) => studio.node.name + ", ")}</p>
                     </p>
-                </div>
-                <div className="py-1">
-                    <hr className="border-1 border-gray-300" />
-                </div>
-            </div>
-            <div className="px-6">
-                <p className="font-bold text-lg underline">Alternative Titles</p>
-                <p className="flex font-bold">Japanese:
-                    <p className="pl-1 font-normal">{data.Media.title.native}</p>
-                </p>
-                <p className="flex font-bold">English:
-                    <p className="pl-1 font-normal">{data.Media.title.romaji}</p>
-                </p>
-                <div className="py-1">
-                    <hr className="border-1 border-gray-300" />
-                </div>
-                <p className="font-bold text-lg underline">Synopsis</p>
-                <p>{data.Media.description}</p>
-                <div className="py-1">
-                    <hr className="border-1 border-gray-300" />
-                </div>
-                <p className="font-bold text-lg underline">Information</p>
-                <p className="flex font-bold">Producers:
-                    <p className="pl-1 font-normal">{data.Media.studios.edges.map((studio) => studio.node.name + ", ")}</p>
-                </p>
-                <p className="flex font-bold">Source:
-                    <p className="pl-1 font-normal">{data.Media.source}</p>
-                </p>
-                <p className="flex font-bold">Genres:
-                    <p className="pl-1 font-normal">{data.Media.genres.map((genre) => genre + ", ")}</p>
-                </p>
-                <p className="flex font-bold">Episodes:
-                    <p className="pl-1 font-normal">{data.Media.episodes}</p>
-                </p>
-                <p className="flex font-bold">Duration:
-                    <p className="pl-1 font-normal">{data.Media.duration} min.</p>
-                </p>
-                <div className="py-1">
-                    <hr className="border-1 border-gray-300" />
-                </div>
-                <p className="font-bold">Characters & Voice Actors</p>
-                {data.Media.characters.edges.map((char) => (
-                    <div className="flex">
-                        <div className="flex left-0 w-56">
-                            <img src={char.node.image.large}
-                                alt=""
-                                className="h-28 rounded-md border-4 border-gray-300 shadow-lg"
-                            />
-                            <p className="flex-wrap">{char.node.name.userPreferred}</p>
-                        </div>
-                        <div className="absolute right-0">
-                            <div className="flex">
-                                <p className="pt-20">{char.voiceActors[0].name.userPreferred}</p>
-                                <img src={char.voiceActors[0].image.large}
+                    <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>Source:
+                        <p className="pl-1 font-normal">{data.Media.source}</p>
+                    </p>
+                    <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>Genres:
+                        <p className="pl-1 font-normal">{data.Media.genres.map((genre) => genre + ", ")}</p>
+                    </p>
+                    <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>Episodes:
+                        <p className="pl-1 font-normal">{data.Media.episodes}</p>
+                    </p>
+                    <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>Duration:
+                        <p className="pl-1 font-normal">{data.Media.duration} min.</p>
+                    </p>
+                    <div className="py-1">
+                        <hr className="border-1 border-gray-300" />
+                    </div>
+                    <p className="font-bold" style={{ color: currTheme.defaultFont }}>Characters & Voice Actors</p>
+                    {data.Media.characters.edges.map((char) => (
+                        <div className="flex">
+                            <div className="flex left-0 w-56">
+                                <img src={char.node.image.large}
                                     alt=""
                                     className="h-28 rounded-md border-4 border-gray-300 shadow-lg"
                                 />
+                                <p className="flex-wrap" style={{ color: currTheme.defaultFont }}>{char.node.name.userPreferred}</p>
+                            </div>
+                            <div className="absolute right-0">
+                                <div className="flex">
+                                    <p className="pt-20" style={{ color: currTheme.defaultFont }}>{char.voiceActors[0].name.userPreferred}</p>
+                                    <img src={char.voiceActors[0].image.large}
+                                        alt=""
+                                        className="h-28 rounded-md border-4 border-gray-300 shadow-lg"
+                                    />
+                                </div>
                             </div>
                         </div>
+                    ))}
+                    <div className="py-1">
+                        <hr className="border-1 border-gray-300" />
                     </div>
-                ))}
-                <div className="py-1">
-                    <hr className="border-1 border-gray-300" />
                 </div>
             </div>
         </div>
