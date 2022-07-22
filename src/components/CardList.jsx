@@ -4,7 +4,6 @@ import { useTheme } from '../lib/Theme';
 export default function CardList({ children, ...attr }) {
     const navigate = useNavigate()
     function gotoDetail(id) {
-        console.log(id);
         navigate(`/${id}`)
     }
 

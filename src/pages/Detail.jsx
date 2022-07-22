@@ -11,7 +11,7 @@ export default function DetailPage() {
     const navigate = useNavigate()
     const [favorites, setFavorites] = useState([])
     const getArray = JSON.parse(localStorage.getItem("favorites") || "0")
-    const { currTheme, setCurrTheme } = useTheme()
+    const { currTheme } = useTheme()
 
     useEffect(() => {
         if (getArray !== 0) {
@@ -50,8 +50,6 @@ export default function DetailPage() {
         }
     })
 
-    console.log(currTheme);
-
     if (loading) {
         return <div className="flex w-screen h-screen" style={{ backgroundColor: currTheme.background }}>
             <div className="absolute left-0 right-0 bottom-0 top-72">
@@ -78,7 +76,7 @@ export default function DetailPage() {
                     </button>
                 </div>
                 <div className="w-64" >
-                    <h5 className="py-2 text-lg font-bold break-all max-w-screen-sm" style={{ color: currTheme.defaultFont }}>{data.Media.title.romaji}</h5>
+                    <h5 className="py-2 text-lg font-bold break-all max-w-screen-sm" style={{ color: currTheme.defaultFont }}>{data.Media.title.romaji ? data.Media.title.romaji : "-"}</h5>
                 </div>
                 <div className="absolute right-0 pr-2 pt-5">
                     <button onClick={() => changeColor(id, data.Media)}>
@@ -104,13 +102,13 @@ export default function DetailPage() {
                     <div>
                         <p className="font-bold text-lg underline" style={{ color: currTheme.defaultFont }}>Scores</p>
                         <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>Rating:
-                            <p className="pl-1 font-medium" >{data.Media.averageScore / 10}/10</p>
+                            <p className="pl-1 font-medium" >{data.Media.averageScore ? data.Media.averageScore / 10 : "-"}/10</p>
                         </p>
                         <p className="flex font-bold"style={{ color: currTheme.defaultFont }}>Trend:
-                            <p className="pl-1 font-medium">#{data.Media.trending}</p>
+                            <p className="pl-1 font-medium">#{data.Media.trending ? data.Media.trending : "-"}</p>
                         </p>
                         <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>Ranked:
-                            <p className="pl-1 font-medium">#{data.Media.rankings[0].rank}</p>
+                            <p className="pl-1 font-medium">#{data.Media.rankings.length !== 0 ? data.Media.rankings[0].rank : "-"}</p>
                         </p>
                     </div>
                     <div className="py-1">
@@ -120,40 +118,40 @@ export default function DetailPage() {
                 <div className="px-6">
                     <p className="font-bold text-lg underline" style={{ color: currTheme.defaultFont }}>Alternative Titles</p>
                     <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>Japanese:
-                        <p className="pl-1 font-normal">{data.Media.title.native}</p>
+                        <p className="pl-1 font-normal">{data.Media.title.native ? data.Media.title.native : "-"}</p>
                     </p>
                     <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>English:
-                        <p className="pl-1 font-normal">{data.Media.title.romaji}</p>
+                        <p className="pl-1 font-normal">{data.Media.title.romaji ? data.Media.title.romaji : "-"}</p>
                     </p>
                     <div className="py-1">
                         <hr className="border-1 border-gray-300" />
                     </div>
                     <p className="font-bold text-lg underline" style={{ color: currTheme.defaultFont }}>Synopsis</p>
-                    <p style={{ color: currTheme.defaultFont }}>{data.Media.description}</p>
+                    <p style={{ color: currTheme.defaultFont }}>{data.Media.description ? data.Media.description : "-"}</p>
                     <div className="py-1">
                         <hr className="border-1 border-gray-300" />
                     </div>
                     <p className="font-bold text-lg underline" style={{ color: currTheme.defaultFont }}>Information</p>
                     <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>Producers:
-                        <p className="pl-1 font-normal" >{data.Media.studios.edges.map((studio) => studio.node.name + ", ")}</p>
+                        <p className="pl-1 font-normal" >{data.Media.studios.edges ? data.Media.studios.edges.map((studio) => studio.node.name + ", ") : "-"}</p>
                     </p>
                     <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>Source:
-                        <p className="pl-1 font-normal">{data.Media.source}</p>
+                        <p className="pl-1 font-normal">{data.Media.source ? data.Media.source : "-"}</p>
                     </p>
                     <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>Genres:
-                        <p className="pl-1 font-normal">{data.Media.genres.map((genre) => genre + ", ")}</p>
+                        <p className="pl-1 font-normal">{data.Media.genres ? data.Media.genres.map((genre) => genre + ", ") : "-"}</p>
                     </p>
                     <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>Episodes:
-                        <p className="pl-1 font-normal">{data.Media.episodes}</p>
+                        <p className="pl-1 font-normal">{data.Media.episodes ? data.Media.episodes : "-"}</p>
                     </p>
                     <p className="flex font-bold" style={{ color: currTheme.defaultFont }}>Duration:
-                        <p className="pl-1 font-normal">{data.Media.duration} min.</p>
+                        <p className="pl-1 font-normal">{data.Media.duration ? data.Media.duration : "-"} min.</p>
                     </p>
                     <div className="py-1">
                         <hr className="border-1 border-gray-300" />
                     </div>
                     <p className="font-bold" style={{ color: currTheme.defaultFont }}>Characters & Voice Actors</p>
-                    {data.Media.characters.edges.map((char) => (
+                    {data.Media.characters ? data.Media.characters.edges.map((char) => (
                         <div className="flex">
                             <div className="flex left-0 w-56">
                                 <img src={char.node.image.large}
@@ -164,15 +162,15 @@ export default function DetailPage() {
                             </div>
                             <div className="absolute right-0">
                                 <div className="flex">
-                                    <p className="pt-20" style={{ color: currTheme.defaultFont }}>{char.voiceActors[0].name.userPreferred}</p>
-                                    <img src={char.voiceActors[0].image.large}
-                                        alt=""
+                                    <p className="pt-20" style={{ color: currTheme.defaultFont }}>{char.voiceActors.length !== 0 ? char.voiceActors[0].name.userPreferred : "-"}</p>
+                                    <img src={char.voiceActors.length !== 0 ? char.voiceActors[0].image.large : ""}
+                                        alt="pic"
                                         className="h-28 rounded-md border-4 border-gray-300 shadow-lg"
                                     />
                                 </div>
                             </div>
                         </div>
-                    ))}
+                    )) : "-"}
                     <div className="py-1">
                         <hr className="border-1 border-gray-300" />
                     </div>

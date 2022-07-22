@@ -24,7 +24,6 @@ export default function Home() {
     const [theme, setTheme] = useState(currTheme.name == "Light" ? 1 : 2)
 
     function changeTheme(e) {
-        console.log(e.target.value);
         if (e.target.value == 1) {
             setCurrTheme(THEME.light)
             setTheme(1)

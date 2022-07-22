@@ -12,8 +12,8 @@ import { useTheme } from '../lib/Theme';
 
 const navigation = [
     { name: 'Home', href: '/', icon: HomeIcon, current: false, isClick: 1 },
-    { name: 'Favorite', href: 'favorite', icon: StarIcon, current: false, isClick: 2 },
-    { name: 'Search', href: 'search', icon: SearchIcon, current: false, isClick: 3 },
+    { name: 'Favorite', href: '/favorite', icon: StarIcon, current: false, isClick: 2 },
+    { name: 'Search', href: '/search', icon: SearchIcon, current: false, isClick: 3 },
 ]
 const userNavigation = [
     { name: 'Your Profile', href: '#' },
