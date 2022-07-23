@@ -84,10 +84,7 @@ export default function NavBar({ children, ...attr }) {
                                         <Link
                                             key={item.name}
                                             to={item.href}
-                                            className={classNames(
-                                                item.current ? 'bg-indigo-800 text-white' : 'text-indigo-100 hover:bg-indigo-600',
-                                                'group flex items-center px-2 py-2 text-base font-medium rounded-md'
-                                            )}
+                                            className='group flex items-center px-2 py-2 text-base font-medium rounded-md'
                                             onClick={() => setTab(item.isClick)}
                                             style={{color: currTheme.fontColor}}
                                         >
